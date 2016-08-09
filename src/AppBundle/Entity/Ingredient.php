@@ -1,0 +1,151 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ingredient
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\IngredientRepository")
+ */
+class Ingredient
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="text")
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="amount", type="decimal")
+     */
+    private $amount;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="amountType", type="string", length=255)
+     */
+    private $amountType;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Recipe", inversedBy="ingredients")
+     */
+    private $recipe;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Ingredient
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set amount
+     *
+     * @param string $amount
+     * @return Ingredient
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Get amount
+     *
+     * @return string 
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * Set amountType
+     *
+     * @param string $amountType
+     * @return Ingredient
+     */
+    public function setAmountType($amountType)
+    {
+        $this->amountType = $amountType;
+
+        return $this;
+    }
+
+    /**
+     * Get amountType
+     *
+     * @return string 
+     */
+    public function getAmountType()
+    {
+        return $this->amountType;
+    }
+
+    /**
+     * Set recipe
+     *
+     * @param \AppBundle\Entity\Recipe $recipe
+     * @return Ingredient
+     */
+    public function setRecipe(\AppBundle\Entity\Recipe $recipe = null)
+    {
+        $this->recipe = $recipe;
+
+        return $this;
+    }
+
+    /**
+     * Get recipe
+     *
+     * @return \AppBundle\Entity\Recipe 
+     */
+    public function getRecipe()
+    {
+        return $this->recipe;
+    }
+}
