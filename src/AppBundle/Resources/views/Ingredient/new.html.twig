@@ -1,8 +1,7 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body %}
-    {{ include("AppBundle:Recipe:recipe.html.twig", {'entity': recipe})}}
+    {{ include("AppBundle:Recipe:recipe.html.twig", {'recipe': recipe})}}
     <h3>Dodawanie składników</h3>
     {{ form(form) }}
-    {{ include('AppBundle:Recipe:recipe_edition_menu.html.twig', {'recipe': recipe}) }}
 {% endblock %}

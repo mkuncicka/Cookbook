@@ -1,11 +1,55 @@
+.container {
+    margin-left: 3%;
+    margin-right: 3%;
+    padding: 3%;
+}
+
+#logged {
+    margin-left: 3%;
+    padding-left: 3%
+}
+
+.menu {
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
 .menu li {
     display: inline-block;
     border: black 1px solid;
     padding: 2px;
     background-color: lightgray;
+
+}
+
+.menu li:hover {
+    background-color: #C1F0B6;
 }
 
 .menu li a {
     text-decoration: none;
     color: black;
+}
+
+form button:hover {
+    background-color: #C1F0B6;
+}
+
+.btn {
+    border: black 1px solid;
+    background-color: darkgray;
+    padding: 2px;
+    margin: 2px;
+    display: inline-block;
+    text-decoration: none;
+    color: black
+}
+
+a {
+    text-decoration: none;
+    color: #0E4D00;
+}
+
+a:hover {
+    background-color: #C1F0B6;
 }

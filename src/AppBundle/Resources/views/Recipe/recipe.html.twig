@@ -1,13 +1,13 @@
-<p>{{ entity.date|date('Y-m-d H:i:s') }}</p>
-<h2><a href="{{ path('recipe_show', {'id':entity.id}) }}">{{ entity.title }}</a></h2>
-<p>Ilość porcji: {{ entity.portions }}</p>
+<p class="date">{{ recipe.date|date('Y-m-d H:i:s') }}</p>
+<h2><a class="title" href="{{ path('recipe_show', {'id':recipe.id}) }}">{{ recipe.title }}</a></h2>
+<p>Ilość porcji: {{ recipe.portions }}</p>
 <p>Składniki</p>
 <ul>
-    {% for ingredient in entity.ingredients %}
+    {% for ingredient in recipe.ingredients %}
         <li>{{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.amountType }}</li>
     {% else %}
         <p>brak skałdników</p>
     {% endfor %}
 </ul>
 <h3>Sposób przygotowania</h3>
-<p>{{ entity.instructions }}</p>
+<p>{{ recipe.instructions }}</p>

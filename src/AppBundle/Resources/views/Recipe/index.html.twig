@@ -2,8 +2,8 @@
 
 {% block body %}
 {{ parent() }}
-    {% for entity in entities %}
-        {{ include('AppBundle:Recipe:recipe.html.twig', {'entity': entity}) }}
+    {% for recipe in recipes %}
+        {{ include('AppBundle:Recipe:recipe.html.twig', {'recipe': recipe}) }}
         <hr>
     {% endfor %}
 {% endblock %}

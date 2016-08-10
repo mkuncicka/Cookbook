@@ -1,3 +1,3 @@
-<a href="{{ path('recipe_show', {'id': recipe.id}) }}">Pokaż przepis</a>
-<a href="{{ path('recipe_edit', {'id': recipe.id}) }}">Edytuj</a>
-{{ form(delete_form) }}
+<a class="btn" href="{{ path('recipe_show', {'id': recipe.id}) }}">Pokaż przepis</a>
+<a class="btn" href="{{ path('recipe_edit', {'id': recipe.id}) }}">Edytuj przepis</a>
+{{ form(recipe_delete_form) }}

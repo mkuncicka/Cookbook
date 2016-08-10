@@ -2,22 +2,15 @@
 
 {% block body %}
     {{ parent() }}
-    <h1>Recipe edit</h1>
+    <h3>Edycja przepisu</h3>
 
     {{ form(edit_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('recipe') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    {{ form(recipe_delete_form) }}
 
-    <p>Składniki</p>
+    <h3>Składniki:</h3>
     {% for ingredient in ingredients %}
-<li>{{ ingredient.name }} <a href="{{ path(('ingredient_edit'), {'id':ingredient.id}) }}">edytuj</a></li>
+<li>{{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.amountType }} <a class="btn" href="{{ path(('ingredient_edit'), {'id':ingredient.id}) }}">edytuj</a></li>
 {% endfor %}
-    <a href="{{ path('ingredient_new', {'id': entity.id}) }}">Dodaj składnik</a>
+    <a class="btn" href="{{ path('ingredient_new', {'id': recipe.id}) }}">Dodaj składnik</a>
 {% endblock %}

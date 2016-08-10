@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\IngredientType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -30,10 +31,10 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Recipe')->findAll();
+        $recipes = $em->getRepository('AppBundle:Recipe')->findAll();
 
         return array(
-            'entities' => $entities,
+            'recipes' => $recipes,
         );
     }
     /**
@@ -45,21 +46,21 @@ class RecipeController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Recipe();
-        $form = $this->createCreateForm($entity);
+        $recipe = new Recipe();
+        $form = $this->createCreateForm($recipe);
         $form->handleRequest($request);
-        $entity->setAuthor($this->getUser());
+        $recipe->setAuthor($this->getUser());
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($recipe);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ingredient_new', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('ingredient_new', array('id' => $recipe->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'recipe' => $recipe,
             'form'   => $form->createView(),
         );
     }
@@ -71,14 +72,14 @@ class RecipeController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Recipe $entity)
+    private function createCreateForm(Recipe $recipe)
     {
-        $form = $this->createForm(new RecipeType(), $entity, array(
+        $form = $this->createForm(new RecipeType(), $recipe, array(
             'action' => $this->generateUrl('recipe_create'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Dodaj przepis'));
 
         return $form;
     }
@@ -92,12 +93,12 @@ class RecipeController extends Controller
      */
     public function newAction()
     {
-        $entity = new Recipe();
-        $form   = $this->createCreateForm($entity);
+        $recipe = new Recipe();
+        $form   = $this->createCreateForm($recipe);
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'recipe' => $recipe,
+            'recipe_form'   => $form->createView(),
         );
     }
 
@@ -112,10 +113,10 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AppBundle:Recipe')->findBy(['author' => $this->getUser()]);
+        $recipes = $em->getRepository('AppBundle:Recipe')->findBy(['author' => $this->getUser()]);
 
         return array(
-            'entities'      => $entities,
+            'recipes'      => $recipes,
         );
     }
 
@@ -126,21 +127,21 @@ class RecipeController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction(Request $request, $id)
+    public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Recipe')->find($id);
+        $recipe = $em->getRepository('AppBundle:Recipe')->find($id);
 
-        if (!$entity) {
+        if (!$recipe) {
             throw $this->createNotFoundException('Unable to find Recipe entity.');
         }
-        $ingredients = $entity->getIngredients();
-        $deleteForm = $this->createDeleteForm($id);
+        $ingredients = $recipe->getIngredients();
+        $recipeDeleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'recipe'      => $recipe,
+            'recipe_delete_form' => $recipeDeleteForm->createView(),
             'ingredients' => $ingredients,
         );
     }
@@ -156,21 +157,21 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Recipe')->find($id);
+        $recipe = $em->getRepository('AppBundle:Recipe')->find($id);
 
-        if (!$entity) {
+        if (!$recipe) {
             throw $this->createNotFoundException('Unable to find Recipe entity.');
         }
 
-        $ingredients = $em->getRepository('AppBundle:Ingredient')->findBy(['recipe' => $entity]);
+        $ingredients = $em->getRepository('AppBundle:Ingredient')->findBy(['recipe' => $recipe]);
 
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($recipe);
+        $recipeDeleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'recipe'      => $recipe,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'recipe_delete_form' => $recipeDeleteForm->createView(),
             'ingredients' => $ingredients,
         );
     }
@@ -182,14 +183,14 @@ class RecipeController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Recipe $entity)
+    private function createEditForm(Recipe $recipe)
     {
-        $form = $this->createForm(new RecipeType(), $entity, array(
-            'action' => $this->generateUrl('recipe_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new RecipeType(), $recipe, array(
+            'action' => $this->generateUrl('recipe_update', array('id' => $recipe->getId())),
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Zapisz przepis'));
 
         return $form;
     }
@@ -204,14 +205,14 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:Recipe')->find($id);
+        $recipe = $em->getRepository('AppBundle:Recipe')->find($id);
 
-        if (!$entity) {
+        if (!$recipe) {
             throw $this->createNotFoundException('Unable to find Recipe entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $recipeDeleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($recipe);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -221,9 +222,9 @@ class RecipeController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
+            'recipe'      => $recipe,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'recipe_delete_form' => $recipeDeleteForm->createView(),
         );
     }
     /**
@@ -239,13 +240,16 @@ class RecipeController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('AppBundle:Recipe')->find($id);
+            $recipe = $em->getRepository('AppBundle:Recipe')->find($id);
+            $ingredients = $recipe->getIngredients();
 
-            if (!$entity) {
+            if (!$recipe) {
                 throw $this->createNotFoundException('Unable to find Recipe entity.');
             }
-
-            $em->remove($entity);
+            foreach ($ingredients as $ingredient) {
+                $em->remove($ingredient);
+            }
+            $em->remove($recipe);
             $em->flush();
         }
 
@@ -264,7 +268,7 @@ class RecipeController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('recipe_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Usuń przepis'))
             ->getForm()
         ;
     }

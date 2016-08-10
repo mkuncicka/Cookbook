@@ -3,5 +3,7 @@
 {% block body %}
     {{ parent() }}
     {{ include('AppBundle:Recipe:recipe.html.twig') }}
-    {{ include('AppBundle:Recipe:recipe_edition_menu.html.twig', {'recipe': entity})}}
+    {{ include('AppBundle:Recipe:recipe_edition_menu.html.twig',
+    {'recipe': recipe, 'recipe_delete_form': recipe_delete_form}) }}
+
 {% endblock %}

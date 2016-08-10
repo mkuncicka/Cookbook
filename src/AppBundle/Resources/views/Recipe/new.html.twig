@@ -2,15 +2,8 @@
 
 {% block body %}
     {{ parent() }}
-    <h1>Dodaj przepis</h1>
+    <h3>Dodaj przepis</h3>
 
-    {{ form(form) }}
+    {{ form(recipe_form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('recipe') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 {% endblock %}

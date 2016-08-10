@@ -2,10 +2,10 @@
 
 {% block body %}
     {{ parent() }}
-    {% for entity in entities %}
-        {{ include('AppBundle:Recipe:recipe.html.twig', {'ingredients': entity.ingredients}) }}
+    {% for recipe in recipes %}
+        {{ include('AppBundle:Recipe:recipe.html.twig', {'ingredients': recipe.ingredients}) }}
         <hr>
     {% else %}
-        <p>You have no recipes</p>
+        <p>Nie masz jeszcze żadnych przepisów :(</p>
     {% endfor %}
 {% endblock %}
