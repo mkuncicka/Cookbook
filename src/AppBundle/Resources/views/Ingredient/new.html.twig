@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    {{ include("AppBundle:Recipe:add_ingredient.html.twig", {'recipe': recipe})}}
+    {{ include("AppBundle:Recipe:recipe.html.twig", {'entity': recipe})}}
     <h1>Ingredient creation</h1>
 
     {{ form(form) }}

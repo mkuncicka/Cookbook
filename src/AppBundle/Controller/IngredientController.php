@@ -56,7 +56,7 @@ class IngredientController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ingredient_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('ingredient_new', array('id' => $entity->getRecipe()->getId())));
         }
 
         return array(
@@ -97,11 +97,13 @@ class IngredientController extends Controller
         $recipe = $em->getRepository('AppBundle:Recipe')->find($request->query->get('id'));
         $entity = new Ingredient();
         $form   = $this->createCreateForm($entity, $request->query->get('id'));
+        $ingredients = $em->getRepository('AppBundle:Ingredient')->findBy(['recipe' => $recipe]);
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
             'recipe' => $recipe,
+            'ingredients' => $ingredients,
         );
     }
 
@@ -199,7 +201,7 @@ class IngredientController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ingredient_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('recipe_edit', array('id' => $entity->getRecipe()->getId())));
         }
 
         return array(

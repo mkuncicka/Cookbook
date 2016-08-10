@@ -17,6 +17,7 @@
 
     <p>Składniki</p>
     {% for ingredient in ingredients %}
-<li>{{ ingredient.name }}</li>
+<li>{{ ingredient.name }} <a href="{{ path(('ingredient_edit'), {'id':ingredient.id}) }}">edytuj</a></li>
 {% endfor %}
+    <a href="{{ path('ingredient_new', {'id': entity.id}) }}">Dodaj składnik</a>
 {% endblock %}
