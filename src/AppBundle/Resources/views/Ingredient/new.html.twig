@@ -1,16 +1,8 @@
-{% extends '::base.html.twig' %}
+{% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body %}
     {{ include("AppBundle:Recipe:recipe.html.twig", {'entity': recipe})}}
-    <h1>Ingredient creation</h1>
-
+    <h3>Dodawanie składników</h3>
     {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('ingredient') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    {{ include('AppBundle:Recipe:recipe_edition_menu.html.twig', {'recipe': recipe}) }}
 {% endblock %}

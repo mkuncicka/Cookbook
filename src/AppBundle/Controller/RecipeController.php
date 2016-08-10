@@ -249,7 +249,7 @@ class RecipeController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('recipe'));
+        return $this->redirect($this->generateUrl('app_user_mainpage'));
     }
 
     /**

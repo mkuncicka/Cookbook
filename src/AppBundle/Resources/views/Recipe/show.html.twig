@@ -3,17 +3,5 @@
 {% block body %}
     {{ parent() }}
     {{ include('AppBundle:Recipe:recipe.html.twig') }}
-    <ul class="record_actions">
-    <li>
-    <a href="{{ path('recipe_show_all') }}">
-    Back to the list of your recepies
-    </a>
-    </li>
-    <li>
-    <a href="{{ path('recipe_edit', { 'id': entity.id }) }}">
-    Edit
-    </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-    </ul>
+    {{ include('AppBundle:Recipe:recipe_edition_menu.html.twig', {'recipe': entity})}}
 {% endblock %}
