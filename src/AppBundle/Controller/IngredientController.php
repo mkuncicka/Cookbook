@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Recipe;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -38,18 +39,20 @@ class IngredientController extends Controller
     /**
      * Creates a new Ingredient entity.
      *
-     * @Route("/", name="ingredient_create")
+     * @Route("/{recId}", name="ingredient_create")
      * @Method("POST")
      * @Template("AppBundle:Ingredient:new.html.twig")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, $recId)
     {
+        $em = $this->getDoctrine()->getManager();
+        $recipe = $em->getRepository('AppBundle:Recipe')->find($recId);
         $entity = new Ingredient();
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity, $recId);
         $form->handleRequest($request);
+        $entity->setRecipe($recipe);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
@@ -69,10 +72,10 @@ class IngredientController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Ingredient $entity)
+    private function createCreateForm(Ingredient $entity, $recId)
     {
         $form = $this->createForm(new IngredientType(), $entity, array(
-            'action' => $this->generateUrl('ingredient_create'),
+            'action' => $this->generateUrl('ingredient_create', array('recId' => $recId)),
             'method' => 'POST',
         ));
 
@@ -88,14 +91,17 @@ class IngredientController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $recipe = $em->getRepository('AppBundle:Recipe')->find($request->query->get('id'));
         $entity = new Ingredient();
-        $form   = $this->createCreateForm($entity);
+        $form   = $this->createCreateForm($entity, $request->query->get('id'));
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'recipe' => $recipe,
         );
     }
 

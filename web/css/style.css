@@ -1,0 +1,11 @@
+.menu li {
+    display: inline-block;
+    border: black 1px solid;
+    padding: 2px;
+    background-color: lightgray;
+}
+
+.menu li a {
+    text-decoration: none;
+    color: black;
+}

@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Entity\Recipe;
+use AppBundle\Entity\Ingredient;
 use AppBundle\Form\RecipeType;
 
 /**
@@ -47,13 +48,14 @@ class RecipeController extends Controller
         $entity = new Recipe();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        $entity->setAuthor($this->getUser());
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('recipe_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('ingredient_new', array('id' => $entity->getId())));
         }
 
         return array(
@@ -102,6 +104,24 @@ class RecipeController extends Controller
     /**
      * Finds and displays a Recipe entity.
      *
+     * @Route("/all", name="recipe_show_all")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showAllByUser()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('AppBundle:Recipe')->findBy(['author' => $this->getUser()]);
+
+        return array(
+            'entities'      => $entities,
+        );
+    }
+
+    /**
+     * Finds and displays a Recipe entity.
+     *
      * @Route("/{id}", name="recipe_show")
      * @Method("GET")
      * @Template()
@@ -115,12 +135,13 @@ class RecipeController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Recipe entity.');
         }
-
+        $ingredients = $entity->getIngredients();
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'ingredients' => $ingredients,
         );
     }
 
@@ -141,6 +162,8 @@ class RecipeController extends Controller
             throw $this->createNotFoundException('Unable to find Recipe entity.');
         }
 
+        $ingredients = $em->getRepository('AppBundle:Ingredient')->findBy(['recipe' => $entity]);
+
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -148,6 +171,7 @@ class RecipeController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'ingredients' => $ingredients,
         );
     }
 

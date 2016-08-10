@@ -1,6 +1,8 @@
-{% extends '::base.html.twig' %}
+{% extends 'FOSUserBundle::layout.html.twig' %}
 
-{% block body -%}
+{% block body %}
+    {{ parent() }}
+
     <h1>Recipe list</h1>
 
     <table class="records_list">
@@ -27,9 +29,9 @@
                     <li>
                         <a href="{{ path('recipe_show', { 'id': entity.id }) }}">show</a>
                     </li>
-                    <li>
-                        <a href="{{ path('recipe_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
+                    {#<li>#}
+                        {#<a href="{{ path('recipe_edit', { 'id': entity.id }) }}">edit</a>#}
+                    {#</li>#}
                 </ul>
                 </td>
             </tr>

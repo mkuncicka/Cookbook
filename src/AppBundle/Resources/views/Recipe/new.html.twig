@@ -1,7 +1,8 @@
-{% extends '::base.html.twig' %}
+{% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Recipe creation</h1>
+    {{ parent() }}
+    <h1>Dodaj przepis</h1>
 
     {{ form(form) }}
 

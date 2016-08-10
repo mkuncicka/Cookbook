@@ -1,6 +1,7 @@
-{% extends '::base.html.twig' %}
+{% extends 'FOSUserBundle::layout.html.twig' %}
 
-{% block body -%}
+{% block body %}
+    {{ parent() }}
     <h1>Recipe edit</h1>
 
     {{ form(edit_form) }}
@@ -13,4 +14,9 @@
     </li>
     <li>{{ form(delete_form) }}</li>
 </ul>
+
+    <p>Składniki</p>
+    {% for ingredient in ingredients %}
+<li>{{ ingredient.name }}</li>
+{% endfor %}
 {% endblock %}

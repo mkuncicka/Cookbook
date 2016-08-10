@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     /**
      * @Route("/")
-     * @Template("AppBundle::main_page.html.twig")
+     * @Template("AppBundle::main.html.twig")
      */
     public function mainPageAction()
     {
