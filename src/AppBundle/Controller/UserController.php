@@ -15,6 +15,18 @@ class UserController extends Controller
      */
     public function mainPageAction()
     {
-        return [];
+        return ['user' => $this->getUser()];
+    }
+
+    /**
+     * @Route("/users", name="user_show_all")
+     * @Template()
+     */
+    public function showAll()
+    {
+        $em = $this->getDoctrine()->getManager();
+//        $ids = $em->createQuery('SELECT author_id r FROM AppBundle:Recipe r');
+        $users = $em->getRepository("AppBundle:User")->findAll();
+        return ['users' => $users, 'user' => $this->getUser(),];
     }
 }

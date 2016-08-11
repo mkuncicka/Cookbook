@@ -11,6 +11,14 @@
     padding-left: 3%
 }
 
+a {
+    text-decoration: none;
+    color: #0E4D00;
+}
+
+a:hover {
+    background-color: #C1F0B6;
+}
 .menu {
     margin-left: 3%;
     margin-right: 3%;
@@ -19,18 +27,19 @@
 .menu li {
     display: inline-block;
     border: black 1px solid;
-    padding: 2px;
-    background-color: lightgray;
-
+    padding: 3px;
+    background-color: #0E4D00;
 }
 
+.menu a {
+    color: white;
+}
 .menu li:hover {
-    background-color: #C1F0B6;
+    background-color: #0b3d00;
 }
 
-.menu li a {
-    text-decoration: none;
-    color: black;
+.menu li a:hover {
+    background-color: #0b3d00;
 }
 
 form button:hover {
@@ -47,14 +56,7 @@ form button:hover {
     color: black
 }
 
-a {
-    text-decoration: none;
-    color: #0E4D00;
-}
 
-a:hover {
-    background-color: #C1F0B6;
-}
 
 .date {
     float: right;
@@ -98,5 +100,5 @@ a:hover {
 }
 
 #recipe_author {
-    
+
 }

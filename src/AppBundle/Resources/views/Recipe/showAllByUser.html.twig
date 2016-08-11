@@ -2,6 +2,7 @@
 
 {% block body %}
     {{ parent() }}
+    <h3>Przepisy użytkownika {{ username }}</h3>
     {% for recipe in recipes %}
         {{ include('AppBundle:Recipe:recipe.html.twig', {'ingredients': recipe.ingredients}) }}
         <hr>

@@ -1,0 +1,12 @@
+{% extends 'FOSUserBundle::layout.html.twig'%}
+
+{% block body %}
+{{ parent() }}
+    <div class="users_list">
+    {% for us in users %}
+        <p><a href="{{ path('recipe_show_all_by_user', {'id': us.id}) }}">{{ us.username }}</a></p>
+        {% else %}
+        <p>CookBook nie ma jeszcze użytkowników :( Możesz być pierwszy! <a href="/{{ path('fos_user_registration_register') }}">Zarejestruj się!</a></p>
+    {% endfor %}
+    </div>
+{% endblock %}

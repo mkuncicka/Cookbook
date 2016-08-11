@@ -13,7 +13,8 @@
 
     <h3>Składniki:</h3>
     {% for ingredient in ingredients %}
-<li>{{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.amountType }} <a href="{{ path(('ingredient_edit'), {'id':ingredient.id}) }}"><button>edytuj</button></a></li>
+<li>{{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.amountType }}
+    <a href="{{ path(('ingredient_edit'), {'id':ingredient.id}) }}"><button>edytuj</button></a></li>
 {% endfor %}
     <a href="{{ path('ingredient_new', {'id': recipe.id}) }}"><button>Dodaj składnik</button></a>
 {% endif %}

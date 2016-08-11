@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Form\IngredientType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -35,6 +34,7 @@ class RecipeController extends Controller
 
         return array(
             'recipes' => $recipes,
+            'user' => $this->getUser(),
         );
     }
     /**
@@ -70,6 +70,7 @@ class RecipeController extends Controller
         return array(
             'recipe' => $recipe,
             'form'   => $form->createView(),
+            'user' => $this->getUser(),
         );
     }
 
@@ -108,29 +109,12 @@ class RecipeController extends Controller
         return array(
             'recipe' => $recipe,
             'recipe_form'   => $form->createView(),
+            'user' => $this->getUser(),
         );
     }
 
     /**
-     * Finds and displays a Recipe entity.
-     *
-     * @Route("/all", name="recipe_show_all")
-     * @Method("GET")
-     * @Template("AppBundle:Recipe:showAllByUser.html.twig")
-     */
-    public function showAllByLoggedUser()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $recipes = $em->getRepository('AppBundle:Recipe')->findBy(['author' => $this->getUser()]);
-
-        return array(
-            'recipes'      => $recipes,
-        );
-    }
-
-    /**
-     * Finds and displays a Recipe entity.
+     * Finds and displays all Recipes added by chosen user.
      *
      * @Route("/all/{id}", name="recipe_show_all_by_user")
      * @Method("GET")
@@ -144,6 +128,8 @@ class RecipeController extends Controller
 
         return array(
             'recipes'      => $recipes,
+            'user' => $this->getUser(),
+            'username' => $user->getUsername(),
         );
     }
     /**
@@ -200,6 +186,7 @@ class RecipeController extends Controller
             'edit_form'   => $editForm->createView(),
             'recipe_delete_form' => $recipeDeleteForm->createView(),
             'ingredients' => $ingredients,
+            'user' => $this->getUser(),
         );
     }
 
@@ -263,6 +250,7 @@ class RecipeController extends Controller
             'recipe'      => $recipe,
             'edit_form'   => $editForm->createView(),
             'recipe_delete_form' => $recipeDeleteForm->createView(),
+            'user' => $this->getUser(),
         );
     }
     /**
@@ -310,14 +298,4 @@ class RecipeController extends Controller
             ->getForm()
         ;
     }
-//
-//    private function createPhotoForm($id)
-//    {
-//        return $this->createFormBuilder()
-//            ->setAction($this->generateUrl('recipe_show', array('id' => $id)))
-//            ->setMethod('PUT')
-//            ->add('photo', 'file', array('label' => 'Zdjęcie'))
-//            ->getForm()
-//        ;
-//    }
 }
