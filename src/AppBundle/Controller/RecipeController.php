@@ -116,9 +116,9 @@ class RecipeController extends Controller
      *
      * @Route("/all", name="recipe_show_all")
      * @Method("GET")
-     * @Template()
+     * @Template("AppBundle:Recipe:showAllByUser.html.twig")
      */
-    public function showAllByUser()
+    public function showAllByLoggedUser()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -129,6 +129,23 @@ class RecipeController extends Controller
         );
     }
 
+    /**
+     * Finds and displays a Recipe entity.
+     *
+     * @Route("/all/{id}", name="recipe_show_all_by_user")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showAllByUser($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->find($id);
+        $recipes = $em->getRepository('AppBundle:Recipe')->findBy(['author' => $user]);
+
+        return array(
+            'recipes'      => $recipes,
+        );
+    }
     /**
      * Finds and displays a Recipe entity.
      *
@@ -152,6 +169,7 @@ class RecipeController extends Controller
             'recipe'      => $recipe,
             'recipe_delete_form' => $recipeDeleteForm->createView(),
             'ingredients' => $ingredients,
+            'user' => $this->getUser(),
         );
     }
 

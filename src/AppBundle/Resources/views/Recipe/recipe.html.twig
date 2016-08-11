@@ -3,6 +3,7 @@
 <img src="{{ asset(recipe.photo) }}" class="photo">
 <div class="header_recipe">
 <h2><a class="title" href="{{ path('recipe_show', {'id':recipe.id}) }}">{{ recipe.title }}</a></h2>
+<p id="recipe_author">Autor: {{ recipe.author.username }}</p>
 <p>Ilość porcji: {{ recipe.portions }}</p>
 <p>Składniki</p>
 <ul>

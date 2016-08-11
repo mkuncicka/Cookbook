@@ -4,6 +4,7 @@
     {{ parent() }}
     {{ include('AppBundle:Recipe:recipe.html.twig') }}
     <hr>
+{% if is_granted("ROLE_USER") and (recipe.author == user) %}
     <h3>Edycja przepisu</h3>
 <div class="form">
     {{ form(edit_form) }}
@@ -15,4 +16,5 @@
 <li>{{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.amountType }} <a href="{{ path(('ingredient_edit'), {'id':ingredient.id}) }}"><button>edytuj</button></a></li>
 {% endfor %}
     <a href="{{ path('ingredient_new', {'id': recipe.id}) }}"><button>Dodaj składnik</button></a>
+{% endif %}
 {% endblock %}
