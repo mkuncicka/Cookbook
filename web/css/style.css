@@ -1,7 +1,9 @@
 .container {
     margin-left: 3%;
-    margin-right: 3%;
-    padding: 3%;
+    margin-right: 10%;
+    padding-top: 1%;
+    padding-left: 3%;
+    padding-right: 3%;
 }
 
 #logged {
@@ -52,4 +54,45 @@ a {
 
 a:hover {
     background-color: #C1F0B6;
+}
+
+.date {
+    float: right;
+}
+
+.photo {
+    margin-top: 2%;
+    float: left;
+    width: 15%;
+}
+
+.header_recipe {
+    margin-left: 3%;
+    display: inline-block;
+}
+
+.form input {
+    display: block;
+    margin-top: 5px;
+    width: 30%;
+}
+
+.form textarea {
+    margin-top: 5px;
+    display: block;
+    width: 30%;
+    height: 10%;
+}
+
+.form button {
+    display: inline-block;
+}
+
+#remember_me {
+    display: inline;
+    width: auto;
+}
+
+#submit_regist, #_submit, button {
+    width: 13%;
 }

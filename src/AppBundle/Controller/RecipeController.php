@@ -49,9 +49,17 @@ class RecipeController extends Controller
         $recipe = new Recipe();
         $form = $this->createCreateForm($recipe);
         $form->handleRequest($request);
-        $recipe->setAuthor($this->getUser());
 
         if ($form->isValid()) {
+            $recipe->setAuthor($this->getUser());
+
+            $photo = $form->get('photo')->getData();
+            if ($photo) {
+                $photoName = uniqid() .'.'.$photo->guessExtension();
+                $photo->move("images", $photoName);
+                $recipe->setPhoto("/images/" . $photoName);
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
             $em->flush();
@@ -79,6 +87,7 @@ class RecipeController extends Controller
             'method' => 'POST',
         ));
 
+        $form->add('photo', 'file', array('label' => 'Zdjęcie', 'mapped' => false, 'required' => false));
         $form->add('submit', 'submit', array('label' => 'Dodaj przepis'));
 
         return $form;
@@ -149,7 +158,7 @@ class RecipeController extends Controller
     /**
      * Displays a form to edit an existing Recipe entity.
      *
-     * @Route("/{id}/edit", name="recipe_edit")
+     * @Route("/edit/{id}", name="recipe_edit")
      * @Method("GET")
      * @Template()
      */
@@ -190,6 +199,7 @@ class RecipeController extends Controller
             'method' => 'PUT',
         ));
 
+        $form->add('photo', 'file', array('label' => 'Zmień zdjęcie', 'mapped' => false, 'required' => false));
         $form->add('submit', 'submit', array('label' => 'Zapisz przepis'));
 
         return $form;
@@ -210,12 +220,22 @@ class RecipeController extends Controller
         if (!$recipe) {
             throw $this->createNotFoundException('Unable to find Recipe entity.');
         }
-
+        $oldPhotoDir = "../web" . $recipe->getPhoto();
         $recipeDeleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($recipe);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $photo = $editForm->get('photo')->getData();
+            if ($photo) {
+                $photoName = uniqid() . '.' . $photo->guessExtension();
+                $photo->move("images", $photoName);
+                $recipe->setPhoto("/images/" . $photoName);
+            }
+
+            if ($oldPhotoDir != "../web/images/default.png") {
+                unlink($oldPhotoDir);
+            }
             $em->flush();
 
             return $this->redirect($this->generateUrl('recipe_edit', array('id' => $id)));
@@ -272,4 +292,14 @@ class RecipeController extends Controller
             ->getForm()
         ;
     }
+//
+//    private function createPhotoForm($id)
+//    {
+//        return $this->createFormBuilder()
+//            ->setAction($this->generateUrl('recipe_show', array('id' => $id)))
+//            ->setMethod('PUT')
+//            ->add('photo', 'file', array('label' => 'Zdjęcie'))
+//            ->getForm()
+//        ;
+//    }
 }

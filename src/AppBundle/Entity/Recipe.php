@@ -68,6 +68,13 @@ class Recipe
     private $tags;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="photo", type="string")
+     */
+    private $photo;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -163,6 +170,7 @@ class Recipe
         $this->ingredients = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->date = new DateTime();
+        $this->photo = "/images/default.png";
     }
 
     /**
@@ -253,6 +261,24 @@ class Recipe
     {
         return $this->tags;
     }
+
+    /**
+     * @param string $photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+
 
     public function __toString()
     {

@@ -2,15 +2,17 @@
 
 {% block body %}
     {{ parent() }}
+    {{ include('AppBundle:Recipe:recipe.html.twig') }}
+    <hr>
     <h3>Edycja przepisu</h3>
-
+<div class="form">
     {{ form(edit_form) }}
-
-    {{ form(recipe_delete_form) }}
+{{ form(recipe_delete_form) }}
+</div>
 
     <h3>Składniki:</h3>
     {% for ingredient in ingredients %}
-<li>{{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.amountType }} <a class="btn" href="{{ path(('ingredient_edit'), {'id':ingredient.id}) }}">edytuj</a></li>
+<li>{{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.amountType }} <a href="{{ path(('ingredient_edit'), {'id':ingredient.id}) }}"><button>edytuj</button></a></li>
 {% endfor %}
-    <a class="btn" href="{{ path('ingredient_new', {'id': recipe.id}) }}">Dodaj składnik</a>
+    <a href="{{ path('ingredient_new', {'id': recipe.id}) }}"><button>Dodaj składnik</button></a>
 {% endblock %}

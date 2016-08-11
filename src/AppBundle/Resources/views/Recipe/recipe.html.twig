@@ -1,4 +1,7 @@
-<p class="date">{{ recipe.date|date('Y-m-d H:i:s') }}</p>
+<p class="date">{{ recipe.date|date('d-m-Y') }}<br>
+{{ recipe.date|date('H:i') }}</p>
+<img src="{{ asset(recipe.photo) }}" class="photo">
+<div class="header_recipe">
 <h2><a class="title" href="{{ path('recipe_show', {'id':recipe.id}) }}">{{ recipe.title }}</a></h2>
 <p>Ilość porcji: {{ recipe.portions }}</p>
 <p>Składniki</p>
@@ -9,5 +12,6 @@
         <p>brak skałdników</p>
     {% endfor %}
 </ul>
+</div>
 <h3>Sposób przygotowania</h3>
 <p>{{ recipe.instructions }}</p>

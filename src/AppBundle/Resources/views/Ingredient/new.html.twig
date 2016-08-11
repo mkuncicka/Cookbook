@@ -3,5 +3,7 @@
 {% block body %}
     {{ include("AppBundle:Recipe:recipe.html.twig", {'recipe': recipe})}}
     <h3>Dodawanie składników</h3>
-    {{ form(form) }}
+<div class="form">
+{{ form(form) }}
+</div>
 {% endblock %}

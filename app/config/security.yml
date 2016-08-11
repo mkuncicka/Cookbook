@@ -19,6 +19,11 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/recipe/all, role: ROLE_USER}
+        - { path: ^/recipe/new, role: ROLE_USER}
+        - { path: ^/recipe/edit, role: ROLE_USER}
+        - { path: ^/ingredient, role: ROLE_USER}
         - { path: ^/admin/, role: ROLE_ADMIN }
 
     role_hierarchy:
