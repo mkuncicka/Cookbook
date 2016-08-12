@@ -132,6 +132,19 @@ class RecipeController extends Controller
             'username' => $user->getUsername(),
         );
     }
+
+    /**
+     * @Route("/category/{id}", name="recipe_show_all_by_category")
+     * @Template()
+     */
+    public function showAllByCategoryAction(Request $request, $id)
+    {
+        $category = $this->getDoctrine()->getRepository("AppBundle:Category")->find($id);
+        $recipes = $this->getDoctrine()->getRepository('AppBundle:Recipe')->findBy(["category" => $category]);
+
+        return ['recipes' => $recipes, 'category' => $category];
+    }
+
     /**
      * Finds and displays a Recipe entity.
      *
@@ -236,11 +249,11 @@ class RecipeController extends Controller
                 $photoName = uniqid() . '.' . $photo->guessExtension();
                 $photo->move("images", $photoName);
                 $recipe->setPhoto("/images/" . $photoName);
+                if ($oldPhotoDir != "../web/images/default.png") {
+                    unlink($oldPhotoDir);
+                }
             }
 
-            if ($oldPhotoDir != "../web/images/default.png") {
-                unlink($oldPhotoDir);
-            }
             $em->flush();
 
             return $this->redirect($this->generateUrl('recipe_edit', array('id' => $id)));

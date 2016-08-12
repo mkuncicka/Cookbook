@@ -23,6 +23,7 @@ security:
         - { path: ^/recipe/new, role: ROLE_USER}
         - { path: ^/recipe/edit, role: ROLE_USER}
         - { path: ^/ingredient, role: ROLE_USER}
+        - { path: ^/category/.+, role: ROLE_ADMIN}
         - { path: ^/admin/, role: ROLE_ADMIN }
 
     role_hierarchy:

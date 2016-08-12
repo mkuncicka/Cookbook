@@ -2,10 +2,15 @@
 
 {% block body %}
     {{ parent() }}
-    <h3>Kategorie:</h3>
-{% for category in categories %}
-    {{ include("AppBundle:Category:category.html.twig", {'category': category}) }}
-{% endfor %}
 
-    <a href="{{ path('category_new') }}">Dodaj kategorię</a>
+    <h3>Kategorie:</h3>
+
+    {% for category in categories %}
+        {{ include("AppBundle:Category:category.html.twig", {'category': category}) }}
+    {% endfor %}
+
+    {% if is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('category_new') }}">Dodaj kategorię</a>
+    {% endif %}
+
 {% endblock %}

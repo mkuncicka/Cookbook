@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h3>Przepisy w kategorii: {{category.name }}</h3>
+{% for recipe in recipes %}
+    {{ include('AppBundle:Recipe:recipe.html.twig') }}
+    {% else %}
+    <p>Brak przepisów w kategorii</p>
+{% endfor %}
+{% endblock %}
+

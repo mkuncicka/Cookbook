@@ -2,7 +2,7 @@
 {{ recipe.date|date('H:i') }}</p>
 <img src="{{ asset(recipe.photo) }}" class="photo">
 <div class="header_recipe">
-<h2><a class="title" href="{{ path('recipe_show', {'id':recipe.id}) }}">{{ recipe.title }}</a><br><span class="category">{{ recipe.category }}</span></h2>
+<h2><a class="title" href="{{ path('recipe_show', {'id':recipe.id}) }}">{{ recipe.title }}</a><br><span class="category">Kategoria: {{ recipe.category }}</span></h2>
 
 <p id="recipe_author"><a href="{{ path("recipe_show_all_by_user", {'id':recipe.author.id}) }}">Autor: {{ recipe.author.username }}</a></p>
 <p>Ilość porcji: {{ recipe.portions }}</p>

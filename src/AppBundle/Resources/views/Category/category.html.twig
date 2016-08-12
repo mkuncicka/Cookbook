@@ -1,5 +1,7 @@
 <div class="category">
-    <h2>{{ category.name }}</h2>
+    <h2><a href="{{ path('recipe_show_all_by_category', {'id': category.id}) }}">{{ category.name }}</a></h2>
+    {% if is_granted("ROLE_ADMIN") %}
     <a href="{{ path("category_edit", {'id': category.id}) }}">edytuj</a>
     <a href="{{ path("category_delete", {'id': category.id}) }}">usuń</a>
+    {% endif %}
 </div>
