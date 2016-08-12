@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Category Controller
@@ -36,7 +37,7 @@ class CategoryController extends Controller
             return $this->redirectToRoute("category_show_all");
         }
 
-        return ['new_cat_form' => $form->createView()];
+        return ['form' => $form->createView()];
     }
 
     /**
@@ -45,48 +46,68 @@ class CategoryController extends Controller
      */
     public function showAllAction()
     {
-        $categories = $this->getDoctrine()->getRepository('AppBundle:Category')->findAll();
+        $categories = $this->getDoctrine()->getRepository('AppBundle:Category')->findBy([], ['name' => 'ASC']);
 
         return ['categories' => $categories];
     }
 
     /**
-     * @Route("/admin/category/new")
-     * @Method("POST")
-     * @Template()
+     * @Route("/edit/{id}", name="category_edit")
+     * @Template("AppBundle:Category:new.html.twig")
      */
-    public function createAction()
+    public function editAction(Request $request, $id)
     {
+        $category = $this->getDoctrine()->getRepository("AppBundle:Category")->find($id);
+        if (!$category) {
+            throw $this->createNotFoundException('Unable to find Category entity.');
+        }
+        $form = $this->createForm(new CategoryType(), $category);
+        $form->add('submit', 'submit', ['label' => 'Zapisz kategorię']);
+        $form->handleRequest($request);
 
+        if ($form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute("category_show_all");
+        }
+
+        return ['form' => $form->createView()];
     }
 
     /**
-     * @Route("/admin/category/edit/{id}")
-     * @Method("GET")
-     * @Template()
+     * Deletes a Category entity.
+     *
+     * @Route("/delete/{id}", name="category_delete")
      */
-    public function editAction()
+    public function deleteAction(Request $request, $id)
     {
 
+        $category = $this->getDoctrine()->getRepository('AppBundle:Category')->find($id);
+
+        if (!$category) {
+            throw $this->createNotFoundException('Unable to find Category entity.');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($category);
+        $em->flush();
+
+        return new Response("Skasowano kategorię: " . $category->getName());
+//        return $this->redirectToRoute('category_show_all');
     }
 
     /**
-     * @Route("/admin/category/edit/{id}")
-     * @Method("PUT")
-     * @Template()
+     * Creates a form to delete a Category entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
      */
-    public function updateAction()
+    private function createDeleteForm($id)
     {
-
-    }
-
-    /**
-     * @Route("/admin/category/delete/{id}")
-     * @Method("DELETE")
-     * @Template()
-     */
-    public function deleteAction()
-    {
-
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('category_delete', array('id' => $id)))
+            ->setMethod('DELETE')
+            ->add('submit', 'submit', array('label' => 'Usuń kategorię'))
+            ->getForm();
     }
 }

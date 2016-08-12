@@ -2,7 +2,10 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Category;
+use Doctrine\ORM\Query\Expr\Select;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -18,6 +21,8 @@ class RecipeType extends AbstractType
             ->add('title', null, array('label' => 'Tytuł'))
             ->add('instructions', null, array('label' => 'Sposób przygotowania'))
             ->add('portions', null, array('label' => 'Ilość porcji'))
+            ->add('category', 'entity',
+                ['class' => 'AppBundle:Category'])
         ;
     }
     

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\AppBundle;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -70,5 +71,32 @@ class Category
     public function getName()
     {
         return $this->name;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Remove recipe
+     *
+     * @param \AppBundle\Entity\Recipe $recipes
+     */
+    public function removeRecipes(\AppBundle\Entity\Recipe $recipe)
+    {
+        $this->recipes->removeElement($recipe);
+    }
+
+    /**
+     * @param mixed $recipes
+     *
+     * @return Category
+     */
+    public function addRecipes($recipe)
+    {
+        $this->recipes[] = $recipe;
+
+        return $this;
     }
 }
