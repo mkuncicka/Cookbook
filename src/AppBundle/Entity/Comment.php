@@ -103,5 +103,5 @@ class Comment
         $this->recipe = $recipe;
     }
 
-    
+
 }

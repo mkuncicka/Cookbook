@@ -1,0 +1,9 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="comment_form">
+        {{ form(form) }}
+    </div>
+
+{% endblock %}

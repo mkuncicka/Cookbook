@@ -34,7 +34,6 @@ class RecipeController extends Controller
 
         return array(
             'recipes' => $recipes,
-            'user' => $this->getUser(),
         );
     }
     /**
@@ -70,7 +69,6 @@ class RecipeController extends Controller
         return array(
             'recipe' => $recipe,
             'form'   => $form->createView(),
-            'user' => $this->getUser(),
         );
     }
 
@@ -109,7 +107,6 @@ class RecipeController extends Controller
         return array(
             'recipe' => $recipe,
             'recipe_form'   => $form->createView(),
-            'user' => $this->getUser(),
         );
     }
 
@@ -128,7 +125,6 @@ class RecipeController extends Controller
 
         return array(
             'recipes'      => $recipes,
-            'user' => $this->getUser(),
             'username' => $user->getUsername(),
         );
     }
@@ -168,7 +164,6 @@ class RecipeController extends Controller
             'recipe'      => $recipe,
             'recipe_delete_form' => $recipeDeleteForm->createView(),
             'ingredients' => $ingredients,
-            'user' => $this->getUser(),
         );
     }
 
@@ -199,7 +194,6 @@ class RecipeController extends Controller
             'edit_form'   => $editForm->createView(),
             'recipe_delete_form' => $recipeDeleteForm->createView(),
             'ingredients' => $ingredients,
-            'user' => $this->getUser(),
         );
     }
 
@@ -263,13 +257,13 @@ class RecipeController extends Controller
             'recipe'      => $recipe,
             'edit_form'   => $editForm->createView(),
             'recipe_delete_form' => $recipeDeleteForm->createView(),
-            'user' => $this->getUser(),
         );
     }
     /**
      * Deletes a Recipe entity.
      *
      * @Route("/{id}", name="recipe_delete")
+     * @Template()
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -290,9 +284,11 @@ class RecipeController extends Controller
             }
             $em->remove($recipe);
             $em->flush();
+
+            return $this->redirect($this->generateUrl('app_user_mainpage'));
         }
 
-        return $this->redirect($this->generateUrl('app_user_mainpage'));
+        return ['form' => $form->createView()];
     }
 
     /**

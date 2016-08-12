@@ -3,7 +3,12 @@
 {% block body %}
     {{ parent() }}
     {{ include('AppBundle:Recipe:recipe.html.twig') }}
-    {{ include('AppBundle:Recipe:recipe_edition_menu.html.twig',
-    {'recipe': recipe, 'recipe_delete_form': recipe_delete_form}) }}
+    {{ include('AppBundle:Recipe:recipe_edition_menu.html.twig', { 'recipe': recipe}) }}
+    <p>Komentarze:</p>
+    {{ include('AppBundle:Comment:show.html.twig', {'comments': recipe.comments}) }}
+
+    {% if is_granted("ROLE_USER") %}
+        <p><a href="{{ path('comment_new', {'recipeId': recipe.id}) }}">Dodaj komentarz</a></p>
+    {% endif %}
 
 {% endblock %}

@@ -1,0 +1,14 @@
+<div class="comments">
+    {% for comment in comments %}
+        <div class="comment">
+            <p>Autor: {{ comment.user.username }}</p>
+            <p>Komentarz: {{ comment.text }}</p>
+            {% if is_granted("ROLE_USER") and app.user == comment.user %}
+            <p><a href="{{ path("comment_edit", {'id': comment.id}) }}">Edytuj</a></p>
+            {{ render(controller("AppBundle:Comment:delete", {'id': comment.id})) }}
+            {% endif %}
+        </div>
+        {% else %}
+        <div>Ten przepis nie ma jeszcze komentarzy</div>
+    {% endfor %}
+</div>

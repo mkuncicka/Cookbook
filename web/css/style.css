@@ -123,3 +123,8 @@ form button:hover {
     margin-top: 0;
     font-size: 12px;
 }
+
+.comment {
+    background-color: #C1F0B6;
+    /*border: #0E4D00 solid 1px;*/
+}
