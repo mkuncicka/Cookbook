@@ -1,0 +1,9 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    {{ parent() }}
+    <h3>Dodaj kategorię</h3>
+    <div class="form">
+        {{ form(new_cat_form) }}
+    </div>
+{% endblock %}

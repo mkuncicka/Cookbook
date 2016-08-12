@@ -75,6 +75,11 @@ class Recipe
     private $photo;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="recipes")
+     */
+    private $category;
+
+    /**
      * Get id
      *
      * @return integer 
