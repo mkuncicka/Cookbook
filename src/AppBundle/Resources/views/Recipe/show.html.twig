@@ -2,9 +2,9 @@
 
 {% block body %}
     {{ parent() }}
-    {{ include('AppBundle:Recipe:recipe.html.twig') }}
     {{ include('AppBundle:Recipe:recipe_edition_menu.html.twig', { 'recipe': recipe}) }}
-    <p>Komentarze:</p>
+    {{ include('AppBundle:Recipe:recipe.html.twig') }}
+    <div id="comments_title">Komentarze:</div>
     {{ include('AppBundle:Comment:show.html.twig', {'comments': recipe.comments}) }}
 
     {% if is_granted("ROLE_USER") %}

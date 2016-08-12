@@ -1,5 +1,7 @@
 {% if is_granted("ROLE_USER") and (recipe.author == app.user) %}
-<a href="{{ path('recipe_edit', {'id': recipe.id}) }}">
-    <button type='submit'>Edytuj przepis</button></a>
-{{ render(controller('AppBundle:Recipe:delete', {'id' : recipe.id})) }}
+    <div class="recipe_menu">
+        <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">
+        <button type='submit'>Edytuj przepis</button></a>
+        {{ render(controller('AppBundle:Recipe:delete', {'id' : recipe.id})) }}
+    </div>
 {% endif %}

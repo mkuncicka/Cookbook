@@ -2,20 +2,21 @@
 {{ recipe.date|date('H:i') }}</p>
 <img src="{{ asset(recipe.photo) }}" class="photo">
 <div class="header_recipe">
-<h2><a class="title" href="{{ path('recipe_show', {'id':recipe.id}) }}">{{ recipe.title }}</a>
+        <h2><a class="title" href="{{ path('recipe_show', {'id':recipe.id}) }}">{{ recipe.title }}</a>
         <br><span class="category">Kategoria: <a href="{{ path("recipe_show_all_by_category", {id: recipe.category.id}) }}">
                         {{ recipe.category }}</a></span></h2>
 
-<p id="recipe_author">Autor: <a href="{{ path("recipe_show_all_by_user", {'id':recipe.author.id}) }}">{{ recipe.author.username }}</a></p>
-<p>Ilość porcji: {{ recipe.portions }}</p>
-<p>Składniki</p>
-<ul>
-    {% for ingredient in recipe.ingredients %}
-        <li>{{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.amountType }}</li>
-    {% else %}
-        <p>brak skałdników</p>
-    {% endfor %}
-</ul>
+        <p id="recipe_author">Autor: <a href="{{ path("recipe_show_all_by_user", {'id':recipe.author.id}) }}">{{ recipe.author.username }}</a></p>
+        <p>Ilość porcji: {{ recipe.portions }}</p>
+        <p>Składniki</p>
+        <ul>
+            {% for ingredient in recipe.ingredients %}
+                <li>{{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.amountType }}</li>
+            {% else %}
+                <p>brak skałdników</p>
+            {% endfor %}
+        </ul>
 </div>
+
 <h3>Sposób przygotowania</h3>
 <p>{{ recipe.instructions }}</p>

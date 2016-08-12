@@ -128,3 +128,13 @@ form button:hover {
     background-color: #C1F0B6;
     /*border: #0E4D00 solid 1px;*/
 }
+
+#comments_title {
+    border-top: dashed #C1F0B6 1px;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+.recipe_menu button {
+    display: inline;
+}
