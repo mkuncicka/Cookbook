@@ -1,0 +1,5 @@
+<ul>
+{% for category in categories %}
+    <li><a href="{{ path("recipe_show_all_by_category", {'id': category.id}) }}">{{ category.name }}</a></li>
+{% endfor %}
+</ul>

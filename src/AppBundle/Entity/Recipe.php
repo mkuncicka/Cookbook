@@ -80,6 +80,11 @@ class Recipe
     private $category;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="recipe")
+     */
+    private $comments;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -174,6 +179,7 @@ class Recipe
     {
         $this->ingredients = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->comments = new ArrayCollection();
         $this->date = new DateTime();
         $this->photo = "/images/default.png";
     }
@@ -299,7 +305,36 @@ class Recipe
         $this->category = $category;
     }
 
+    /**
+     * Add comment
+     *
+     * @param Comment $comment
+     * @return Recipe
+     */
+    public function addComment(Comment $comment)
+    {
+        $this->comments[] = $comment;
 
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
 
     public function __toString()
     {

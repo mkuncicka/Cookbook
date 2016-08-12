@@ -110,4 +110,16 @@ class CategoryController extends Controller
             ->add('submit', 'submit', array('label' => 'Usuń kategorię'))
             ->getForm();
     }
+
+    /**
+     * @Route("/get/all", name="category_get_all")
+     * @Template()
+     */
+    public function getAllAction()
+    {
+        $categories = $this->getDoctrine()->getRepository('AppBundle:Category')->findBy([], ['name' => 'ASC']);
+
+        return ['categories' => $categories];
+    }
+
 }
