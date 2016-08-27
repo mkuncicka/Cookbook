@@ -7,9 +7,11 @@
 }
 
 #logged {
-    margin-left: 3%;
-    padding-left: 3%;
-    position: fixed;
+    float: right;
+    margin-right: 5%;
+    color: black;
+    border: none;
+    background-color: transparent;
 }
 
 a {
@@ -20,12 +22,22 @@ a {
 a:hover {
     background-color: #C1F0B6;
 }
-.menu {
-    margin-top: 5px;
-    margin-left: 3%;
-    margin-right: 3%;
+
+.top_menu {
+
+    margin-right: -10px;
+    margin-top: -10px;
+    width: 100%;
+    padding-top: 5px;
+    padding-right: 3%;
     position: fixed;
-    overflow: auto;
+}
+
+.menu {
+    position: fixed;
+    padding-left: 3%;
+    margin-left: -10px;
+    background-color: white;
 }
 
 .menu li {
@@ -34,6 +46,7 @@ a:hover {
     padding: 3px;
     background-color: #0E4D00;
 }
+
 
 .menu a {
     color: white;
@@ -47,14 +60,16 @@ a:hover {
 }
 
 .left_menu {
-    margin-top: 3%;
+    margin-top: 5%;
+    padding-right: 2%;
     float: left;
     width: auto;
+    height: 100%;
 }
 
 .left_menu li {
     display: block;
-    margin-top: 3%;
+    margin-top: 5%;
 }
 
 form button:hover {
@@ -137,4 +152,12 @@ form button:hover {
 
 .recipe_menu button {
     display: inline;
+}
+
+
+.logo {
+    width: 15%;
+    height: 15%;
+    float: left;
+    margin-right: 20px;
 }

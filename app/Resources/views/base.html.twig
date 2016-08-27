@@ -2,18 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Witaj w CookBook!{% endblock %}</title>
+    <title>{% block title %}Witaj w Cookway!{% endblock %}</title>
     {% block stylesheets %}<link rel="stylesheet" href="{{ asset('css/style.css') }}">{% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('ikona.png') }}" />
 </head>
 <body>
-    <div id="logged">
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-        {% else %}
-            Nie zalogowano
-        {% endif %}
-    </div>
 
     {% for type, messages in app.session.flashBag.all %}
         {% for message in messages %}
@@ -22,21 +15,34 @@
             </div>
         {% endfor %}
     {% endfor %}
-    <div class="menu">
+
+    <div class="menu top_menu">
+        <img class="logo" src="{{ asset('logo.png') }}">
         <ul>
             <li><a href="/">Strona główna</a></li>
+            <li><a href="{{ path('user_show_all') }}">Użytkownicy</a></li>
+            <li><a href="{{ path('category_show_all') }}">Kategorie</a></li>
+
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <li><a href="{{ path('recipe_show_all_by_user', {'id': app.user.id}) }}">Twoje przepisy</a></li>
                 <li><a href="{{ path('recipe_new') }}">Dodaj przepis</a></li>
                 <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+            {% else %}
+                <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
+                <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
             {% endif %}
-            <li><a href="{{ path('user_show_all') }}">Użytkownicy</a></li>
-            <li><a href="{{ path('category_show_all') }}">Kategorie</a></li>
-            <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
-            <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
 
+            <li id="logged">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+            {% else %}
+                Nie zalogowano
+            {% endif %}
+            </li>
         </ul>
     </div>
+
+
 
     <div class="menu left_menu">
         {{ render(controller("AppBundle:Category:getAll")) }}
