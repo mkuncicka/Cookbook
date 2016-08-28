@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\IngredientType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -28,5 +29,15 @@ class UserController extends Controller
 //        $ids = $em->createQuery('SELECT author_id r FROM AppBundle:Recipe r');
         $users = $em->getRepository("AppBundle:User")->findAll();
         return ['users' => $users, 'user' => $this->getUser(),];
+    }
+
+    /**
+     *
+     * @Route("/about", name="about")
+     * @Template("AppBundle::about.html.twig")
+     */
+    public function about()
+    {
+
     }
 }

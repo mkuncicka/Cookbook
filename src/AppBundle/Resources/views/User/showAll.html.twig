@@ -4,7 +4,9 @@
 {{ parent() }}
     <div class="users_list">
     {% for us in users %}
+        {% if "ROLE_SUPER_ADMIN" not in(us.getRoles) %}
         <p><a href="{{ path('recipe_show_all_by_user', {'id': us.id}) }}">{{ us.username }}</a></p>
+        {% endif %}
         {% else %}
         <p>CookBook nie ma jeszcze użytkowników :( Możesz być pierwszy! <a href="/{{ path('fos_user_registration_register') }}">Zarejestruj się!</a></p>
     {% endfor %}

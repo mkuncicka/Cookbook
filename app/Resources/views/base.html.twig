@@ -17,9 +17,8 @@
     {% endfor %}
 
     <div class="menu top_menu">
-        <img class="logo" src="{{ asset('logo.png') }}">
+        <a href="/"><img class="logo" src="{{ asset('logo.png') }}"></a>
         <ul>
-            <li><a href="/">Strona główna</a></li>
             <li><a href="{{ path('user_show_all') }}">Użytkownicy</a></li>
             <li><a href="{{ path('category_show_all') }}">Kategorie</a></li>
 
@@ -57,7 +56,8 @@
         {% endblock %}
     </div>
     <div class="footer">
-
+            <p><a href="{{ path('about') }}">© Magdalena Kuncicka</a></p>
+            <p>mkuncicka@gmail.com</p>
     </div>
     {% block javascripts %}{% endblock %}
 </body>
