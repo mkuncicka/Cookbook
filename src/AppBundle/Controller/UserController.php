@@ -55,4 +55,19 @@ class UserController extends Controller
 
         return $this->redirectToRoute("app_user_mainpage");
     }
+
+    /**
+     * @Route("/stopfollow/{user_to_follow_id}", name="stop_follow")
+     */
+    public function stopFollowAction($user_to_follow_id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $user_to_follow = $em->getRepository("AppBundle:User")->find($user_to_follow_id);
+        $user->removeFollowedUser($user_to_follow);
+
+        $em->flush();
+
+        return $this->redirectToRoute("app_user_mainpage");
+    }
 }

@@ -3,18 +3,36 @@
 {% block body %}
 {{ parent() }}
     <div class="users_list">
+        <table>
+            <tr>
+                <td>Nazwa użytkownika</td>
+                <td> Obserwuj/przestań obserwować</td>
+            </tr>
     {% for us in users %}
         {% if "ROLE_SUPER_ADMIN" not in(us.getRoles) and us != app.user %}
-        <p><a href="{{ path('recipe_show_all_by_user', {'id': us.id}) }}">{{ us.username }}</a>
-
+        <tr><td><a href="{{ path('recipe_show_all_by_user', {'id': us.id}) }}">{{ us.username }}</a>
+            </td>
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <a href="{{ path('follow', {'user_to_follow_id':us.id}) }}">
-                <img class="eye" src="{{ asset('eye.png') }}"></a>
+                <td>
+                {% if us in app.user.followedUsers %}
+
+                    <a href="{{ path('stop_follow', {'user_to_follow_id':us.id}) }}">
+                    <span class="follow">Przestań obserwować</span>
+
+                {% else %}
+                    <a href="{{ path('follow', {'user_to_follow_id':us.id}) }}">
+                    <span class="follow">Obserwuj</span>
+                {% endif %}
+                    </a>
+
+                </td>
             {% endif %}
-        </p>
+        </tr>
         {% endif %}
+
         {% else %}
-        <p>Cookway nie ma jeszcze użytkowników :( Możesz być pierwszy! <a href="/{{ path('fos_user_registration_register') }}">Zarejestruj się!</a></p>
+        <tr><td>Cookway nie ma jeszcze użytkowników :( Możesz być pierwszy! <a href="/{{ path('fos_user_registration_register') }}">Zarejestruj się!</a></td></tr>
     {% endfor %}
+        </table>
     </div>
 {% endblock %}

@@ -202,3 +202,16 @@ form button:hover {
 .eye {
     height: 18px;
 }
+
+.follow {
+    text-decoration: underline;
+}
+
+.users_list table {
+    margin-top: 4%;
+}
+
+.users_list td {
+    text-align: center;
+    padding: 5px;
+}
