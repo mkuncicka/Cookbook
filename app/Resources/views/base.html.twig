@@ -20,15 +20,15 @@
         <a href="/"><img class="logo" src="{{ asset('logo.png') }}"></a>
         <ul>
             <li><a href="{{ path('user_show_all') }}">Użytkownicy</a></li>
-            <li><a href="{{ path('category_show_all') }}">Kategorie</a></li>
-
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <li><a href="{{ path('recipe_show_all_by_user', {'id': app.user.id}) }}">Twoje przepisy</a></li>
+                <li><a href="{{ path('recipe_show_all_followed_users', {'id': app.user.id}) }}">Obserwowane</a></li>
+                <li><a href="{{ path('recipe_show_all_by_user', {'id': app.user.id}) }}">Moje przepisy</a></li>
                 <li><a href="{{ path('recipe_new') }}">Dodaj przepis</a></li>
                 <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
             {% else %}
-                <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
-                <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+                <li><a href="{{ path('recipe_new') }}">Dodaj przepis</a></li>
+                <li><a href="{{ path('fos_user_registration_register') }}">Rejestracja</a></li>
+                <li><a href="{{ path('fos_user_security_login') }}">Logowanie</a></li>
             {% endif %}
 
             <li id="logged">

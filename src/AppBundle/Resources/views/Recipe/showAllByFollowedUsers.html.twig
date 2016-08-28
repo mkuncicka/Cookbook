@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <h3>Przepisy obserwowanych użytkowników</h3>
+    {% for recipe in recipes %}
+        {{ include('AppBundle:Recipe:recipe.html.twig', {'ingredients': recipe.ingredients}) }}
+        <hr>
+    {% else %}
+        <p>Nikogo nie obserwujesz</p>
+    {% endfor %}
+{% endblock %}
+

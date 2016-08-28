@@ -6,6 +6,7 @@ use AppBundle\Form\IngredientType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -26,7 +27,6 @@ class UserController extends Controller
     public function showAll()
     {
         $em = $this->getDoctrine()->getManager();
-//        $ids = $em->createQuery('SELECT author_id r FROM AppBundle:Recipe r');
         $users = $em->getRepository("AppBundle:User")->findAll();
         return ['users' => $users, 'user' => $this->getUser(),];
     }
@@ -36,8 +36,23 @@ class UserController extends Controller
      * @Route("/about", name="about")
      * @Template("AppBundle::about.html.twig")
      */
-    public function about()
+    public function aboutAction()
     {
 
+    }
+
+    /**
+     * @Route("/follow/{user_to_follow_id}", name="follow")
+     */
+    public function followAction($user_to_follow_id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $user_to_follow = $em->getRepository("AppBundle:User")->find($user_to_follow_id);
+        $user->addFollowedUser($user_to_follow);
+
+        $em->flush();
+
+        return $this->redirectToRoute("app_user_mainpage");
     }
 }

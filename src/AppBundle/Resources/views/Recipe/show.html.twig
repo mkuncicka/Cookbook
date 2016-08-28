@@ -9,6 +9,8 @@
 
     {% if is_granted("ROLE_USER") %}
         <p><a href="{{ path('comment_new', {'recipeId': recipe.id}) }}">Dodaj komentarz</a></p>
+        {% else %}
+            <p class="info">Aby dodać komentarz musisz się zalogować.</p>
     {% endif %}
 
 {% endblock %}

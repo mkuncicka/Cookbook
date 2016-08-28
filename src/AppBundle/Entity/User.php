@@ -32,11 +32,23 @@ class User extends BaseUser
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="theyFollowUser")
+     */
+    private $followedUsers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="followedUsers")
+    */
+    private $theyFollowUser;
+
     public function __construct()
     {
         parent::__construct();
         $this->comments = new ArrayCollection();
         $this->recipes = new ArrayCollection();
+        $this->followedUsers = new ArrayCollection();
+        $this->theyFollowUser = new ArrayCollection();
     }
 
     /**
@@ -101,5 +113,48 @@ class User extends BaseUser
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Add followedUser
+     *
+     * @param User $followedUser
+     * @return User
+     */
+    public function addFollowedUser(User $followedUser)
+    {
+        $this->followedUsers[] = $followedUser;
+
+        return $this;
+    }
+
+    /**
+     * Remove followedUser
+     *
+     * @param User $followedUser
+     */
+    public function removeFollowedUser(User $followedUser)
+    {
+        $this->followedUsers->removeElement($followedUser);
+    }
+
+    /**
+     * Get $followedUsers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFollowedUsers()
+    {
+        return $this->followedUsers;
+    }
+
+    /**
+     * Get $theyFollowUser
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTheyFollowUser()
+    {
+        return $this->theyFollowUser;
     }
 }

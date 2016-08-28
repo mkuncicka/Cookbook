@@ -193,3 +193,12 @@ form button:hover {
 .about {
     text-align: justify;
 }
+
+.info {
+    text-decoration: none;
+    color: #0E4D00;
+}
+
+.eye {
+    height: 18px;
+}

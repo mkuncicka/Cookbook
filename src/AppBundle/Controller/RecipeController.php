@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use AppBundle\Entity\User;
 use AppBundle\Entity\Recipe;
 use AppBundle\Entity\Ingredient;
 use AppBundle\Form\RecipeType;
@@ -30,7 +31,7 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $recipes = $em->getRepository('AppBundle:Recipe')->findAll();
+        $recipes = $em->getRepository('AppBundle:Recipe')->findBy([], ['date' => 'DESC']);
 
         return array(
             'recipes' => $recipes,
@@ -121,12 +122,35 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')->find($id);
-        $recipes = $em->getRepository('AppBundle:Recipe')->findBy(['author' => $user]);
+        $recipes = $em->getRepository('AppBundle:Recipe')->findBy(['author' => $user], ['date' => 'DESC']);
 
         return array(
             'recipes'      => $recipes,
             'username' => $user->getUsername(),
         );
+    }
+
+    /**
+     * Finds and displays all Recipes added by followed user.
+     *
+     * @Route("/followed", name="recipe_show_all_followed_users")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showAllByFollowedUsersAction()
+    {
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $followedUsers = $user->getFollowedUsers();
+        $recipes = [];
+        foreach ($followedUsers as $us) {
+            $rec = $em->getRepository('AppBundle:Recipe')->findBy(['author' => $us]);
+            foreach ($rec as $elem) {
+                $recipes[] = $elem;
+            }
+        }
+
+        return ['recipes' => $recipes];
     }
 
     /**
@@ -136,7 +160,7 @@ class RecipeController extends Controller
     public function showAllByCategoryAction(Request $request, $id)
     {
         $category = $this->getDoctrine()->getRepository("AppBundle:Category")->find($id);
-        $recipes = $this->getDoctrine()->getRepository('AppBundle:Recipe')->findBy(["category" => $category]);
+        $recipes = $this->getDoctrine()->getRepository('AppBundle:Recipe')->findBy(["category" => $category], ['date' => 'DESC']);
 
         return ['recipes' => $recipes, 'category' => $category];
     }
