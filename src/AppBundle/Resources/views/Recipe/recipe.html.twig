@@ -8,6 +8,7 @@
 
         <p id="recipe_author">Autor: <a href="{{ path("recipe_show_all_by_user", {'id':recipe.author.id}) }}">{{ recipe.author.username }}</a></p>
         <p>Ilość porcji: {{ recipe.portions }}</p>
+        <p>Czas przygotowania: {{ recipe.preparationTime }}</p>
         <p>Składniki</p>
         <ul>
             {% for ingredient in recipe.ingredients %}

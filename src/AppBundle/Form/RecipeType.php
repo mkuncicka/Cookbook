@@ -20,6 +20,7 @@ class RecipeType extends AbstractType
         $builder
             ->add('title', null, array('label' => 'Tytuł'))
             ->add('instructions', null, array('label' => 'Sposób przygotowania'))
+            ->add('preparationTime', null, array('label' => 'Czas przygotownia [min]'))
             ->add('portions', null, array('label' => 'Ilość porcji'))
             ->add('category', 'entity',
                 ['class' => 'AppBundle:Category'])

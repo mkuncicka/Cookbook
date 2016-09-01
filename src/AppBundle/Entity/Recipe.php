@@ -51,6 +51,12 @@ class Recipe
      */
     private $portions;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preperation_time", type="integer")
+     */
+    private $preparationTime;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="recipes")
@@ -92,6 +98,22 @@ class Recipe
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPreparationTime()
+    {
+        return $this->preparationTime;
+    }
+
+    /**
+     * @param mixed $preparationTime
+     */
+    public function setPreparationTime($preparationTime)
+    {
+        $this->preparationTime = $preparationTime;
     }
 
     /**
